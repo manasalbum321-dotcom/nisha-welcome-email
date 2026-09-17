@@ -22,12 +22,8 @@ if (!admin.apps.length) {
 
   admin.initializeApp({
     credential: admin.credential.cert({
-      projectId:
-        process.env.FIREBASE_PROJECT_ID,
-
-      clientEmail:
-        process.env.FIREBASE_CLIENT_EMAIL,
-
+      projectId: process.env.FIREBASE_PROJECT_ID,
+      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
       privateKey
     })
   });
@@ -56,7 +52,6 @@ function setCorsHeaders(res) {
     "Access-Control-Allow-Headers",
     "Content-Type, Authorization"
   );
-
 }
 
 
@@ -74,21 +69,13 @@ const transporter =
     secure: false,
 
     auth: {
-
-      user:
-        process.env.SMTP_EMAIL,
-
-      pass:
-        process.env.SMTP_APP_PASSWORD
-
+      user: process.env.SMTP_EMAIL,
+      pass: process.env.SMTP_APP_PASSWORD
     },
 
     tls: {
-
       minVersion: "TLSv1.2"
-
     }
-
   });
 
 
@@ -101,20 +88,15 @@ function escapeHtml(value) {
   return String(value)
 
     .replace(/&/g, "&amp;")
-
     .replace(/</g, "&lt;")
-
     .replace(/>/g, "&gt;")
-
     .replace(/"/g, "&quot;")
-
     .replace(/'/g, "&#039;");
-
 }
 
 
 // ============================================================
-// WELCOME EMAIL
+// CLASSIC LUXURY WELCOME EMAIL
 // ============================================================
 
 function createWelcomeEmail(name) {
@@ -128,6 +110,9 @@ function createWelcomeEmail(name) {
     escapeHtml(
       process.env.NISHA_WEBSITE_URL || "#"
     );
+
+  const year =
+    new Date().getFullYear();
 
 
   return `
@@ -151,10 +136,13 @@ content="width=device-width, initial-scale=1.0">
 <body style="
 margin:0;
 padding:0;
-background:#f3f0ea;
+background:#eee9df;
 font-family:Arial,Helvetica,sans-serif;
+color:#171717;
 ">
 
+
+<!-- OUTER BACKGROUND -->
 
 <table
 width="100%"
@@ -162,8 +150,8 @@ cellpadding="0"
 cellspacing="0"
 border="0"
 style="
-background:#f3f0ea;
-padding:40px 15px;
+background:#eee9df;
+padding:45px 15px;
 "
 >
 
@@ -172,38 +160,64 @@ padding:40px 15px;
 <td align="center">
 
 
+<!-- MAIN EMAIL -->
+
 <table
-width="600"
+width="620"
 cellpadding="0"
 cellspacing="0"
 border="0"
 style="
-max-width:600px;
 width:100%;
-background:#ffffff;
-border:1px solid #e6dfd3;
+max-width:620px;
+background:#fbfaf7;
+border:1px solid #d8cdbb;
 "
 >
 
 
-<!-- HEADER -->
+<!-- ===================================================== -->
+<!-- TOP GOLD LINE -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td
+style="
+height:5px;
+background:#b38a4a;
+font-size:0;
+line-height:0;
+"
+>
+</td>
+
+</tr>
+
+
+<!-- ===================================================== -->
+<!-- BRAND HEADER -->
+<!-- ===================================================== -->
 
 <tr>
 
 <td
 align="center"
 style="
-background:#151515;
-padding:35px 20px;
+background:#141414;
+padding:42px 25px 38px;
 "
 >
 
 
+<!-- N MONOGRAM -->
+
 <div style="
 font-family:Georgia,'Times New Roman',serif;
-font-size:42px;
+font-size:52px;
+line-height:1;
 font-weight:bold;
-letter-spacing:5px;
+letter-spacing:2px;
 color:#d7bd8d;
 ">
 
@@ -212,11 +226,15 @@ N
 </div>
 
 
+<!-- BRAND NAME -->
+
 <div style="
-margin-top:8px;
+margin-top:13px;
 font-family:Georgia,'Times New Roman',serif;
-font-size:27px;
-letter-spacing:7px;
+font-size:31px;
+line-height:1;
+font-weight:normal;
+letter-spacing:9px;
 color:#ffffff;
 ">
 
@@ -225,14 +243,18 @@ NISHA
 </div>
 
 
+<!-- BRAND TAGLINE -->
+
 <div style="
-margin-top:10px;
-font-size:10px;
+margin-top:17px;
+font-family:Arial,Helvetica,sans-serif;
+font-size:9px;
+line-height:1.5;
 letter-spacing:4px;
-color:#d7bd8d;
+color:#cdb58b;
 ">
 
-PREMIUM • QUALITY • STYLE
+PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 
 </div>
 
@@ -242,83 +264,18 @@ PREMIUM • QUALITY • STYLE
 </tr>
 
 
-<!-- CONTENT -->
+<!-- ===================================================== -->
+<!-- GOLD DETAIL -->
+<!-- ===================================================== -->
 
 <tr>
 
-<td style="
-padding:45px 40px 35px;
+<td align="center" style="
+padding:25px 20px 0;
 ">
-
-
-<div style="
-font-size:12px;
-letter-spacing:3px;
-color:#b38a4a;
-text-align:center;
-text-transform:uppercase;
-">
-
-Welcome to NISHA
-
-</div>
-
-
-<h1 style="
-margin:18px 0 0;
-text-align:center;
-font-family:Georgia,'Times New Roman',serif;
-font-size:34px;
-font-weight:normal;
-color:#151515;
-">
-
-Welcome, ${safeName}
-
-</h1>
-
-
-<div style="
-width:50px;
-height:1px;
-background:#b38a4a;
-margin:24px auto;
-">
-</div>
-
-
-<p style="
-margin:0 0 18px;
-text-align:center;
-color:#555555;
-font-size:16px;
-line-height:1.8;
-">
-
-We're delighted to have you with us.
-
-</p>
-
-
-<p style="
-margin:0 0 28px;
-text-align:center;
-color:#666666;
-font-size:14px;
-line-height:1.8;
-">
-
-Your NISHA account has been successfully accessed.
-Enjoy a carefully selected experience built around
-premium quality, timeless style and elegance.
-
-</p>
-
-
-<!-- BUTTON -->
 
 <table
-width="100%"
+width="90"
 cellpadding="0"
 cellspacing="0"
 border="0"
@@ -326,24 +283,183 @@ border="0"
 
 <tr>
 
-<td align="center">
+<td
+style="
+height:1px;
+background:#b38a4a;
+font-size:0;
+"
+>
+</td>
+
+<td
+width="18"
+style="
+text-align:center;
+color:#b38a4a;
+font-size:13px;
+"
+>
+◆
+</td>
+
+<td
+style="
+height:1px;
+background:#b38a4a;
+font-size:0;
+"
+>
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+
+<!-- ===================================================== -->
+<!-- WELCOME CONTENT -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td
+align="center"
+style="
+padding:32px 48px 15px;
+"
+>
+
+
+<div style="
+font-family:Arial,Helvetica,sans-serif;
+font-size:10px;
+font-weight:bold;
+letter-spacing:4px;
+color:#a17b43;
+text-transform:uppercase;
+">
+
+WELCOME BACK
+
+</div>
+
+
+<h1 style="
+margin:18px 0 8px;
+font-family:Georgia,'Times New Roman',serif;
+font-size:37px;
+line-height:1.25;
+font-weight:normal;
+letter-spacing:.5px;
+color:#171717;
+">
+
+${safeName}
+
+</h1>
+
+
+<p style="
+margin:0;
+font-family:Georgia,'Times New Roman',serif;
+font-size:17px;
+font-style:italic;
+color:#777064;
+line-height:1.7;
+">
+
+Welcome to the world of NISHA.
+
+</p>
+
+
+</td>
+
+</tr>
+
+
+<!-- ===================================================== -->
+<!-- MAIN MESSAGE -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td
+align="center"
+style="
+padding:15px 55px 32px;
+"
+>
+
+
+<p style="
+margin:0;
+font-size:14px;
+line-height:2;
+color:#5f5b54;
+">
+
+We're delighted to welcome you back.
+Your NISHA account has been successfully accessed.
+
+</p>
+
+
+<p style="
+margin:16px 0 0;
+font-size:14px;
+line-height:2;
+color:#5f5b54;
+">
+
+Discover a carefully curated experience
+where <strong style="color:#302d29;">quality</strong>,
+<strong style="color:#302d29;">timeless style</strong>
+and <strong style="color:#302d29;">elegance</strong>
+come together.
+
+</p>
+
+
+</td>
+
+</tr>
+
+
+<!-- ===================================================== -->
+<!-- BUTTON -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td align="center" style="
+padding:0 20px 42px;
+">
 
 
 <a
 href="${websiteURL}"
 style="
 display:inline-block;
-background:#151515;
+background:#171717;
+border:1px solid #171717;
 color:#ffffff;
 text-decoration:none;
-padding:15px 35px;
-font-size:12px;
-letter-spacing:2px;
+font-family:Arial,Helvetica,sans-serif;
+font-size:10px;
+font-weight:bold;
+letter-spacing:3px;
 text-transform:uppercase;
+padding:17px 36px;
 "
 >
 
-Explore NISHA
+EXPLORE NISHA
 
 </a>
 
@@ -352,7 +468,149 @@ Explore NISHA
 
 </tr>
 
+
+<!-- ===================================================== -->
+<!-- FOUNDER SECTION -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td style="
+padding:0 35px;
+">
+
+
+<table
+width="100%"
+cellpadding="0"
+cellspacing="0"
+border="0"
+style="
+background:#f1ede5;
+border:1px solid #ded4c5;
+"
+>
+
+<tr>
+
+<td
+align="center"
+style="
+padding:30px 25px 27px;
+"
+>
+
+
+<div style="
+font-size:9px;
+letter-spacing:4px;
+color:#a17b43;
+font-weight:bold;
+text-transform:uppercase;
+">
+
+THE HOUSE OF NISHA
+
+</div>
+
+
+<div style="
+width:35px;
+height:1px;
+background:#b38a4a;
+margin:15px auto 18px;
+">
+</div>
+
+
+<div style="
+font-family:Georgia,'Times New Roman',serif;
+font-size:13px;
+letter-spacing:2px;
+color:#777064;
+text-transform:uppercase;
+">
+
+Founded by
+
+</div>
+
+
+<div style="
+margin-top:8px;
+font-family:Georgia,'Times New Roman',serif;
+font-size:24px;
+line-height:1.4;
+color:#171717;
+">
+
+Manas Kumar Prajapati
+
+</div>
+
+
+<div style="
+margin-top:8px;
+font-family:Georgia,'Times New Roman',serif;
+font-size:12px;
+font-style:italic;
+color:#8b8479;
+">
+
+Founder &nbsp;•&nbsp; NISHA
+
+</div>
+
+
+</td>
+
+</tr>
+
 </table>
+
+</td>
+
+</tr>
+
+
+<!-- ===================================================== -->
+<!-- CLOSING MESSAGE -->
+<!-- ===================================================== -->
+
+<tr>
+
+<td
+align="center"
+style="
+padding:35px 45px 38px;
+"
+>
+
+
+<p style="
+margin:0;
+font-family:Georgia,'Times New Roman',serif;
+font-size:17px;
+font-style:italic;
+line-height:1.8;
+color:#4d4942;
+">
+
+"Style is timeless. Quality is remembered."
+
+</p>
+
+
+<div style="
+margin-top:18px;
+font-size:9px;
+letter-spacing:3px;
+color:#a17b43;
+">
+
+NISHA
+
+</div>
 
 
 </td>
@@ -360,17 +618,19 @@ Explore NISHA
 </tr>
 
 
+<!-- ===================================================== -->
 <!-- DIVIDER -->
+<!-- ===================================================== -->
 
 <tr>
 
 <td style="
-padding:0 40px;
+padding:0 35px;
 ">
 
 <div style="
 height:1px;
-background:#e8e2d9;
+background:#ddd5c8;
 ">
 </div>
 
@@ -379,23 +639,25 @@ background:#e8e2d9;
 </tr>
 
 
+<!-- ===================================================== -->
 <!-- FOOTER -->
+<!-- ===================================================== -->
 
 <tr>
 
 <td
 align="center"
 style="
-padding:30px 35px;
+padding:27px 25px 30px;
 "
 >
 
 
 <p style="
-margin:0 0 10px;
-color:#777777;
+margin:0 0 8px;
+font-family:Georgia,'Times New Roman',serif;
 font-size:13px;
-line-height:1.7;
+color:#555149;
 ">
 
 Thank you for choosing NISHA.
@@ -405,12 +667,12 @@ Thank you for choosing NISHA.
 
 <p style="
 margin:0;
-color:#999999;
-font-size:12px;
-line-height:1.7;
+font-size:10px;
+letter-spacing:1px;
+color:#999287;
 ">
 
-Founded by Manas Kumar Prajapati
+PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 
 </p>
 
@@ -420,27 +682,52 @@ Founded by Manas Kumar Prajapati
 </tr>
 
 
-<!-- BOTTOM -->
+<!-- ===================================================== -->
+<!-- BOTTOM BLACK FOOTER -->
+<!-- ===================================================== -->
 
 <tr>
 
 <td
 align="center"
 style="
-background:#151515;
-padding:18px;
+background:#141414;
+padding:20px 15px;
 "
 >
 
 
 <div style="
-color:#888888;
-font-size:10px;
-letter-spacing:1px;
+font-family:Georgia,'Times New Roman',serif;
+font-size:18px;
+letter-spacing:5px;
+color:#d7bd8d;
 ">
 
-© ${new Date().getFullYear()} NISHA.
-All rights reserved.
+NISHA
+
+</div>
+
+
+<div style="
+margin-top:9px;
+font-size:9px;
+letter-spacing:1.5px;
+color:#777777;
+">
+
+© ${year} NISHA. All rights reserved.
+
+</div>
+
+
+<div style="
+margin-top:6px;
+font-size:9px;
+color:#666666;
+">
+
+Founded by Manas Kumar Prajapati
 
 </div>
 
@@ -450,7 +737,26 @@ All rights reserved.
 </tr>
 
 
+<!-- BOTTOM GOLD LINE -->
+
+<tr>
+
+<td
+style="
+height:4px;
+background:#b38a4a;
+font-size:0;
+line-height:0;
+"
+>
+</td>
+
+</tr>
+
+
 </table>
+
+<!-- END MAIN EMAIL -->
 
 
 </td>
@@ -459,6 +765,7 @@ All rights reserved.
 
 </table>
 
+<!-- END OUTER -->
 
 </body>
 
@@ -475,15 +782,16 @@ All rights reserved.
 
 export default async function handler(req, res) {
 
-  // IMPORTANT:
-  // CORS headers must be added before handling OPTIONS.
+  // ----------------------------------------------------------
+  // CORS
+  // ----------------------------------------------------------
 
   setCorsHeaders(res);
 
 
-  // ==========================================================
-  // CORS PREFLIGHT
-  // ==========================================================
+  // ----------------------------------------------------------
+  // OPTIONS
+  // ----------------------------------------------------------
 
   if (req.method === "OPTIONS") {
 
@@ -492,9 +800,9 @@ export default async function handler(req, res) {
   }
 
 
-  // ==========================================================
-  // ONLY POST ALLOWED
-  // ==========================================================
+  // ----------------------------------------------------------
+  // ONLY POST
+  // ----------------------------------------------------------
 
   if (req.method !== "POST") {
 
@@ -509,9 +817,9 @@ export default async function handler(req, res) {
   }
 
 
-  // ==========================================================
+  // ----------------------------------------------------------
   // MAIN
-  // ==========================================================
+  // ----------------------------------------------------------
 
   try {
 
@@ -577,7 +885,7 @@ export default async function handler(req, res) {
 
 
     // --------------------------------------------------------
-    // FIREBASE AUTH DISPLAY NAME
+    // DISPLAY NAME
     // --------------------------------------------------------
 
     const displayName =
@@ -586,7 +894,7 @@ export default async function handler(req, res) {
 
 
     console.log(
-      "Sending NISHA email:",
+      "Sending NISHA luxury email:",
       {
         uid: user.uid,
         email: userEmail,
@@ -619,20 +927,34 @@ export default async function handler(req, res) {
         text:
 `Welcome back to NISHA, ${displayName}!
 
-We're delighted to have you with us.
+We're delighted to welcome you back.
 
 Your NISHA account has been successfully accessed.
 
-Visit NISHA:
+Discover a carefully curated experience where quality,
+timeless style and elegance come together.
+
+Explore NISHA:
 ${process.env.NISHA_WEBSITE_URL}
 
-Founded by Manas Kumar Prajapati`
+THE HOUSE OF NISHA
+
+Founded by Manas Kumar Prajapati
+Founder • NISHA
+
+Thank you for choosing NISHA.
+
+© ${new Date().getFullYear()} NISHA. All rights reserved.`
 
       });
 
 
+    // --------------------------------------------------------
+    // LOG
+    // --------------------------------------------------------
+
     console.log(
-      "NISHA EMAIL SENT:",
+      "NISHA LUXURY EMAIL SENT:",
       info.messageId
     );
 
@@ -646,7 +968,7 @@ Founded by Manas Kumar Prajapati`
       success: true,
 
       message:
-        "NISHA email sent successfully",
+        "NISHA luxury email sent successfully",
 
       messageId:
         info.messageId
