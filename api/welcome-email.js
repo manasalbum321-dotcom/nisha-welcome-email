@@ -100,20 +100,28 @@ function createWelcomeEmail(name) {
 
   const year = new Date().getFullYear();
 
-  // Fashion / shopping image
+  // ==========================================================
+  // REAL IMAGE URLS
+  // IMPORTANT:
+  // These are plain URLs, NOT Markdown links.
+  // ==========================================================
+
   const heroImage =
     "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1400&q=85";
 
-  // Luxury shopping store image
   const shoppingImage =
     "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=1200&q=85";
 
-  // Fashion accessories image
   const accessoryImage =
     "https://images.unsplash.com/photo-1496747611176-843222e1e57c?auto=format&fit=crop&w=1200&q=85";
 
-  return `
+  const watchImage =
+    "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?auto=format&fit=crop&w=900&q=85";
 
+  const beautyImage =
+    "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=900&q=85";
+
+  return `
 <!DOCTYPE html>
 
 <html lang="en">
@@ -131,6 +139,11 @@ function createWelcomeEmail(name) {
   name="x-apple-disable-message-reformatting"
 >
 
+<meta
+  name="format-detection"
+  content="telephone=no"
+>
+
 <title>Welcome to NISHA</title>
 
 <style>
@@ -144,10 +157,13 @@ function createWelcomeEmail(name) {
 
   table {
     border-collapse: collapse;
+    border-spacing: 0;
   }
 
   img {
     border: 0;
+    outline: none;
+    text-decoration: none;
     display: block;
     max-width: 100%;
   }
@@ -166,29 +182,57 @@ function createWelcomeEmail(name) {
       width: 100% !important;
     }
 
-    .hero-padding {
-      padding: 70px 24px !important;
+    .hero-image {
+      height: 260px !important;
+      object-fit: cover !important;
+    }
+
+    .hero-brand {
+      padding: 35px 20px 38px !important;
     }
 
     .hero-title {
-      font-size: 39px !important;
+      font-size: 30px !important;
+      letter-spacing: 7px !important;
     }
 
     .content-padding {
-      padding-left: 25px !important;
-      padding-right: 25px !important;
+      padding-left: 22px !important;
+      padding-right: 22px !important;
     }
 
     .welcome-title {
       font-size: 29px !important;
     }
 
-    .feature-padding {
-      padding: 25px 20px !important;
+    .shopping-image {
+      height: 210px !important;
+      object-fit: cover !important;
     }
 
-    .mobile-image {
-      height: 180px !important;
+    .feature-table {
+      width: 100% !important;
+    }
+
+    .feature-cell {
+      display: block !important;
+      width: 100% !important;
+      border-right: 0 !important;
+      border-bottom: 1px solid #ddd3c4 !important;
+    }
+
+    .feature-cell-last {
+      border-bottom: 0 !important;
+    }
+
+    .founder-image {
+      height: 210px !important;
+      object-fit: cover !important;
+    }
+
+    .mobile-product {
+      display: block !important;
+      width: 100% !important;
     }
 
   }
@@ -196,7 +240,6 @@ function createWelcomeEmail(name) {
 </style>
 
 </head>
-
 
 <body>
 
@@ -210,15 +253,19 @@ function createWelcomeEmail(name) {
   cellspacing="0"
   border="0"
   style="
+    width:100%;
     background:#ebe6dd;
-    padding:42px 12px;
   "
 >
 
 <tr>
 
-<td align="center">
-
+<td
+  align="center"
+  style="
+    padding:42px 12px;
+  "
+>
 
 <!-- ======================================================== -->
 <!-- MAIN CONTAINER -->
@@ -235,10 +282,8 @@ function createWelcomeEmail(name) {
     max-width:620px;
     background:#fbfaf7;
     border:1px solid #d8cdbb;
-    box-shadow:0 12px 35px rgba(0,0,0,.08);
   "
 >
-
 
 <!-- ======================================================== -->
 <!-- TOP GOLD LINE -->
@@ -254,45 +299,69 @@ function createWelcomeEmail(name) {
     line-height:0;
   "
 >
+&nbsp;
 </td>
 
 </tr>
 
 
 <!-- ======================================================== -->
-<!-- HERO / BRAND HEADER -->
+<!-- HERO IMAGE -->
 <!-- ======================================================== -->
 
 <tr>
 
 <td
-  class="hero-padding"
   align="center"
-  valign="middle"
   style="
-    background-color:#151515;
-
-    background-image:
-      linear-gradient(
-        rgba(10,10,10,.66),
-        rgba(10,10,10,.82)
-      ),
-      url('${heroImage}');
-
-    background-size:cover;
-    background-position:center;
-
-    padding:82px 35px 76px;
+    padding:0;
+    margin:0;
+    background:#151515;
   "
 >
 
+<img
+  class="hero-image"
+  src="${heroImage}"
+  width="620"
+  height="300"
+  alt="NISHA Fashion Collection"
+  style="
+    display:block;
+    width:100%;
+    max-width:620px;
+    height:300px;
+    object-fit:cover;
+    border:0;
+  "
+>
+
+</td>
+
+</tr>
+
+
+<!-- ======================================================== -->
+<!-- BRAND HEADER -->
+<!-- ======================================================== -->
+
+<tr>
+
+<td
+  class="hero-brand"
+  align="center"
+  style="
+    background:#151515;
+    padding:45px 25px 48px;
+  "
+>
 
 <!-- N MONOGRAM -->
 
 <div
   style="
     font-family:Georgia,'Times New Roman',serif;
-    font-size:61px;
+    font-size:58px;
     line-height:1;
     font-weight:bold;
     letter-spacing:3px;
@@ -303,14 +372,14 @@ N
 </div>
 
 
-<!-- SMALL GOLD LINE -->
+<!-- GOLD LINE -->
 
 <div
   style="
     width:46px;
     height:1px;
     background:#d7bd8d;
-    margin:18px auto 20px;
+    margin:17px auto 20px;
   "
 >
 </div>
@@ -319,6 +388,7 @@ N
 <!-- BRAND -->
 
 <div
+  class="hero-title"
   style="
     font-family:Georgia,'Times New Roman',serif;
     font-size:34px;
@@ -352,9 +422,9 @@ PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 
 <div
   style="
-    margin-top:30px;
+    margin-top:27px;
     font-family:Georgia,'Times New Roman',serif;
-    font-size:16px;
+    font-size:15px;
     font-style:italic;
     line-height:1.7;
     color:#eeeeee;
@@ -362,7 +432,6 @@ PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 >
 Where timeless style meets modern elegance.
 </div>
-
 
 </td>
 
@@ -398,6 +467,7 @@ Where timeless style meets modern elegance.
     font-size:0;
   "
 >
+&nbsp;
 </td>
 
 <td
@@ -418,6 +488,7 @@ Where timeless style meets modern elegance.
     font-size:0;
   "
 >
+&nbsp;
 </td>
 
 </tr>
@@ -574,24 +645,41 @@ come together.
 <tr>
 
 <td
-  valign="middle"
   style="
-    background-color:#171717;
-
-    background-image:
-      linear-gradient(
-        rgba(15,15,15,.52),
-        rgba(15,15,15,.70)
-      ),
-      url('${shoppingImage}');
-
-    background-size:cover;
-    background-position:center;
-
-    padding:45px 25px;
+    padding:0;
+    background:#171717;
   "
 >
 
+<img
+  class="shopping-image"
+  src="${shoppingImage}"
+  width="548"
+  height="250"
+  alt="NISHA Luxury Shopping"
+  style="
+    display:block;
+    width:100%;
+    max-width:548px;
+    height:250px;
+    object-fit:cover;
+  "
+>
+
+</td>
+
+</tr>
+
+
+<tr>
+
+<td
+  align="center"
+  style="
+    background:#171717;
+    padding:30px 25px 34px;
+  "
+>
 
 <div
   style="
@@ -622,7 +710,7 @@ your personal style.
 
 <div
   style="
-    margin-top:15px;
+    margin:15px auto 0;
     width:38px;
     height:1px;
     background:#d7bd8d;
@@ -644,6 +732,264 @@ Discover fashion, beauty, watches and lifestyle
 pieces selected with a timeless eye.
 </div>
 
+</td>
+
+</tr>
+
+</table>
+
+</td>
+
+</tr>
+
+
+<!-- ======================================================== -->
+<!-- SHOPPING COLLECTION -->
+<!-- ======================================================== -->
+
+<tr>
+
+<td
+  class="content-padding"
+  style="
+    padding:0 35px 30px;
+  "
+>
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+
+<tr>
+
+<td
+  align="center"
+  style="
+    padding-bottom:20px;
+  "
+>
+
+<div
+  style="
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:9px;
+    font-weight:bold;
+    letter-spacing:4px;
+    color:#a17b43;
+  "
+>
+DISCOVER
+</div>
+
+<div
+  style="
+    margin-top:9px;
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:25px;
+    color:#171717;
+  "
+>
+The NISHA Collection
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- TWO PRODUCT IMAGES -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+>
+
+<tr>
+
+<td
+  width="50%"
+  valign="top"
+  style="
+    padding-right:6px;
+  "
+>
+
+<img
+  src="${accessoryImage}"
+  width="265"
+  height="220"
+  alt="NISHA Fashion"
+  style="
+    display:block;
+    width:100%;
+    height:220px;
+    object-fit:cover;
+  "
+>
+
+<div
+  style="
+    padding:12px 5px 4px;
+    text-align:center;
+  "
+>
+
+<div
+  style="
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:16px;
+    color:#292722;
+  "
+>
+Fashion
+</div>
+
+<div
+  style="
+    margin-top:5px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:8px;
+    letter-spacing:2px;
+    color:#9a9185;
+  "
+>
+TIMELESS STYLE
+</div>
+
+</div>
+
+</td>
+
+
+<td
+  width="50%"
+  valign="top"
+  style="
+    padding-left:6px;
+  "
+>
+
+<img
+  src="${watchImage}"
+  width="265"
+  height="220"
+  alt="NISHA Watches"
+  style="
+    display:block;
+    width:100%;
+    height:220px;
+    object-fit:cover;
+  "
+>
+
+<div
+  style="
+    padding:12px 5px 4px;
+    text-align:center;
+  "
+>
+
+<div
+  style="
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:16px;
+    color:#292722;
+  "
+>
+Watches
+</div>
+
+<div
+  style="
+    margin-top:5px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:8px;
+    letter-spacing:2px;
+    color:#9a9185;
+  "
+>
+CLASSIC DETAILS
+</div>
+
+</div>
+
+</td>
+
+</tr>
+
+</table>
+
+
+<!-- BEAUTY IMAGE -->
+
+<table
+  width="100%"
+  cellpadding="0"
+  cellspacing="0"
+  border="0"
+  style="
+    margin-top:20px;
+  "
+>
+
+<tr>
+
+<td>
+
+<img
+  src="${beautyImage}"
+  width="548"
+  height="230"
+  alt="NISHA Beauty"
+  style="
+    display:block;
+    width:100%;
+    height:230px;
+    object-fit:cover;
+  "
+>
+
+</td>
+
+</tr>
+
+<tr>
+
+<td
+  align="center"
+  style="
+    padding:13px 10px 3px;
+  "
+>
+
+<div
+  style="
+    font-family:Georgia,'Times New Roman',serif;
+    font-size:16px;
+    color:#292722;
+  "
+>
+Beauty & Lifestyle
+</div>
+
+<div
+  style="
+    margin-top:5px;
+    font-family:Arial,Helvetica,sans-serif;
+    font-size:8px;
+    letter-spacing:2px;
+    color:#9a9185;
+  "
+>
+MODERN ELEGANCE
+</div>
 
 </td>
 
@@ -670,6 +1016,7 @@ pieces selected with a timeless eye.
 >
 
 <table
+  class="feature-table"
   width="100%"
   cellpadding="0"
   cellspacing="0"
@@ -683,6 +1030,7 @@ pieces selected with a timeless eye.
 <tr>
 
 <td
+  class="feature-cell"
   width="33%"
   align="center"
   valign="top"
@@ -730,6 +1078,7 @@ Thoughtfully selected
 
 
 <td
+  class="feature-cell"
   width="33%"
   align="center"
   valign="top"
@@ -777,6 +1126,7 @@ Premium identity
 
 
 <td
+  class="feature-cell feature-cell-last"
   width="33%"
   align="center"
   valign="top"
@@ -868,7 +1218,7 @@ EXPLORE NISHA
 
 
 <!-- ======================================================== -->
-<!-- FOUNDER / HOUSE OF NISHA -->
+<!-- FOUNDER IMAGE -->
 <!-- ======================================================== -->
 
 <tr>
@@ -876,7 +1226,7 @@ EXPLORE NISHA
 <td
   class="content-padding"
   style="
-    padding:0 35px 35px;
+    padding:0 35px;
   "
 >
 
@@ -893,26 +1243,36 @@ EXPLORE NISHA
 
 <tr>
 
-<td
-  align="center"
-  valign="middle"
+<td>
+
+<img
+  class="founder-image"
+  src="${accessoryImage}"
+  width="548"
+  height="220"
+  alt="The House of NISHA"
   style="
-    background-color:#171717;
-
-    background-image:
-      linear-gradient(
-        rgba(15,15,15,.86),
-        rgba(15,15,15,.91)
-      ),
-      url('${accessoryImage}');
-
-    background-size:cover;
-    background-position:center;
-
-    padding:39px 25px 37px;
+    display:block;
+    width:100%;
+    height:220px;
+    object-fit:cover;
   "
 >
 
+</td>
+
+</tr>
+
+
+<tr>
+
+<td
+  align="center"
+  style="
+    background:#171717;
+    padding:35px 25px 38px;
+  "
+>
 
 <div
   style="
@@ -976,7 +1336,6 @@ Manas Kumar Prajapati
 Founder &nbsp;•&nbsp; NISHA
 </div>
 
-
 </td>
 
 </tr>
@@ -997,7 +1356,7 @@ Founder &nbsp;•&nbsp; NISHA
 <td
   align="center"
   style="
-    padding:5px 40px 38px;
+    padding:38px 40px;
   "
 >
 
@@ -1112,7 +1471,6 @@ PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
   "
 >
 
-
 <div
   style="
     font-family:Georgia,'Times New Roman',serif;
@@ -1149,7 +1507,6 @@ NISHA
 Founded by Manas Kumar Prajapati
 </div>
 
-
 </td>
 
 </tr>
@@ -1169,15 +1526,14 @@ Founded by Manas Kumar Prajapati
     line-height:0;
   "
 >
+&nbsp;
 </td>
 
 </tr>
 
-
 </table>
 
 <!-- END MAIN CONTAINER -->
-
 
 </td>
 
@@ -1190,7 +1546,6 @@ Founded by Manas Kumar Prajapati
 </body>
 
 </html>
-
 `;
 }
 
@@ -1206,7 +1561,6 @@ export default async function handler(req, res) {
 
   setCorsHeaders(res);
 
-
   // ----------------------------------------------------------
   // OPTIONS
   // ----------------------------------------------------------
@@ -1215,20 +1569,16 @@ export default async function handler(req, res) {
     return res.status(204).end();
   }
 
-
   // ----------------------------------------------------------
   // ONLY POST
   // ----------------------------------------------------------
 
   if (req.method !== "POST") {
-
     return res.status(405).json({
       success: false,
       message: "Method not allowed"
     });
-
   }
-
 
   // ----------------------------------------------------------
   // MAIN
@@ -1240,20 +1590,16 @@ export default async function handler(req, res) {
       idToken
     } = req.body || {};
 
-
     // --------------------------------------------------------
     // TOKEN REQUIRED
     // --------------------------------------------------------
 
     if (!idToken) {
-
       return res.status(401).json({
         success: false,
         message: "Firebase ID token is required"
       });
-
     }
-
 
     // --------------------------------------------------------
     // VERIFY FIREBASE TOKEN
@@ -1262,31 +1608,23 @@ export default async function handler(req, res) {
     const decodedToken =
       await auth.verifyIdToken(idToken);
 
-
     // --------------------------------------------------------
     // GET REAL FIREBASE USER
     // --------------------------------------------------------
 
     const user =
-      await auth.getUser(
-        decodedToken.uid
-      );
-
+      await auth.getUser(decodedToken.uid);
 
     const userEmail =
       user.email;
 
-
     if (!userEmail) {
-
       return res.status(400).json({
         success: false,
         message:
           "Firebase user does not have an email address"
       });
-
     }
-
 
     // --------------------------------------------------------
     // DISPLAY NAME
@@ -1296,16 +1634,14 @@ export default async function handler(req, res) {
       user.displayName?.trim() ||
       "NISHA Customer";
 
-
     console.log(
-      "Sending NISHA professional welcome email:",
+      "Sending NISHA welcome email:",
       {
         uid: user.uid,
         email: userEmail,
         displayName
       }
     );
-
 
     // --------------------------------------------------------
     // SEND EMAIL
@@ -1337,7 +1673,7 @@ Discover a carefully curated shopping experience where quality,
 timeless style and elegance come together.
 
 Explore NISHA:
-${process.env.NISHA_WEBSITE_URL}
+${process.env.NISHA_WEBSITE_URL || ""}
 
 THE HOUSE OF NISHA
 
@@ -1351,7 +1687,6 @@ Thank you for choosing NISHA.
 © ${new Date().getFullYear()} NISHA. All rights reserved.`
       });
 
-
     // --------------------------------------------------------
     // LOG
     // --------------------------------------------------------
@@ -1360,7 +1695,6 @@ Thank you for choosing NISHA.
       "NISHA PROFESSIONAL EMAIL SENT:",
       info.messageId
     );
-
 
     // --------------------------------------------------------
     // SUCCESS
@@ -1378,20 +1712,16 @@ Thank you for choosing NISHA.
 
     });
 
-  }
+  } catch (error) {
 
-
-  // ----------------------------------------------------------
-  // ERROR
-  // ----------------------------------------------------------
-
-  catch (error) {
+    // --------------------------------------------------------
+    // ERROR
+    // --------------------------------------------------------
 
     console.error(
       "WELCOME_EMAIL_ERROR:",
       error
     );
-
 
     return res.status(500).json({
 
@@ -1403,5 +1733,4 @@ Thank you for choosing NISHA.
     });
 
   }
-
 }
