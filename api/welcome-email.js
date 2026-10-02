@@ -60,12 +60,18 @@ const transporter = nodemailer.createTransport({
 
   port: 587,
 
+  // Gmail SMTP submission on port 587 uses STARTTLS.
   secure: false,
+  requireTLS: true,
 
   auth: {
     user: process.env.SMTP_EMAIL,
     pass: process.env.SMTP_APP_PASSWORD
   },
+
+  // Keep transporter access limited to SMTP only.
+  disableFileAccess: true,
+  disableUrlAccess: true,
 
   tls: {
     minVersion: "TLSv1.2"
@@ -102,8 +108,6 @@ function createWelcomeEmail(name) {
 
   // ==========================================================
   // REAL IMAGE URLS
-  // IMPORTANT:
-  // These are plain URLs, NOT Markdown links.
   // ==========================================================
 
   const heroImage =
@@ -356,8 +360,6 @@ function createWelcomeEmail(name) {
   "
 >
 
-<!-- N MONOGRAM -->
-
 <div
   style="
     font-family:Georgia,'Times New Roman',serif;
@@ -371,9 +373,6 @@ function createWelcomeEmail(name) {
 N
 </div>
 
-
-<!-- GOLD LINE -->
-
 <div
   style="
     width:46px;
@@ -383,9 +382,6 @@ N
   "
 >
 </div>
-
-
-<!-- BRAND -->
 
 <div
   class="hero-title"
@@ -401,9 +397,6 @@ N
 NISHA
 </div>
 
-
-<!-- TAGLINE -->
-
 <div
   style="
     margin-top:18px;
@@ -416,9 +409,6 @@ NISHA
 >
 PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 </div>
-
-
-<!-- HERO CAPTION -->
 
 <div
   style="
@@ -527,7 +517,6 @@ Where timeless style meets modern elegance.
 WELCOME TO NISHA
 </div>
 
-
 <div
   class="welcome-title"
   style="
@@ -541,7 +530,6 @@ WELCOME TO NISHA
 >
 ${safeName}
 </div>
-
 
 <div
   style="
@@ -585,9 +573,8 @@ Your NISHA experience begins here.
   "
 >
 We're delighted to welcome you to NISHA.
-Your account has been successfully accessed.
+Your account is now ready to use.
 </p>
-
 
 <p
   style="
@@ -670,7 +657,6 @@ come together.
 
 </tr>
 
-
 <tr>
 
 <td
@@ -693,7 +679,6 @@ come together.
 THE NISHA EDIT
 </div>
 
-
 <div
   style="
     margin-top:12px;
@@ -707,7 +692,6 @@ Curated for<br>
 your personal style.
 </div>
 
-
 <div
   style="
     margin:15px auto 0;
@@ -717,7 +701,6 @@ your personal style.
   "
 >
 </div>
-
 
 <div
   style="
@@ -1286,7 +1269,6 @@ EXPLORE NISHA
 THE HOUSE OF NISHA
 </div>
 
-
 <div
   style="
     width:40px;
@@ -1296,7 +1278,6 @@ THE HOUSE OF NISHA
   "
 >
 </div>
-
 
 <div
   style="
@@ -1310,7 +1291,6 @@ THE HOUSE OF NISHA
 Founded by
 </div>
 
-
 <div
   style="
     margin-top:9px;
@@ -1322,7 +1302,6 @@ Founded by
 >
 Manas Kumar Prajapati
 </div>
-
 
 <div
   style="
@@ -1372,7 +1351,6 @@ Founder &nbsp;•&nbsp; NISHA
 >
 "Style is timeless. Quality is remembered."
 </p>
-
 
 <div
   style="
@@ -1439,7 +1417,6 @@ NISHA
 Thank you for choosing NISHA.
 </div>
 
-
 <div
   style="
     margin-top:10px;
@@ -1482,7 +1459,6 @@ PREMIUM &nbsp;•&nbsp; QUALITY &nbsp;•&nbsp; STYLE
 NISHA
 </div>
 
-
 <div
   style="
     margin-top:10px;
@@ -1494,7 +1470,6 @@ NISHA
 >
 © ${year} NISHA. All rights reserved.
 </div>
-
 
 <div
   style="
@@ -1644,36 +1619,43 @@ export default async function handler(req, res) {
     );
 
     // --------------------------------------------------------
-    // SEND EMAIL
+    // SAFE DISPLAY NAME
     // --------------------------------------------------------
 
-    const info =
-      await transporter.sendMail({
+    const safeDisplayName =
+      String(displayName)
+        .replace(/[\r\n]/g, " ")
+        .trim()
+        .slice(0, 100) || "NISHA Customer";
 
-        from:
-          `"NISHA" <${process.env.SMTP_EMAIL}>`,
+    // --------------------------------------------------------
+    // WEBSITE
+    // --------------------------------------------------------
 
-        to:
-          userEmail,
+    const website =
+      process.env.NISHA_WEBSITE_URL || "";
 
-        subject:
-          `Welcome to NISHA, ${displayName}!`,
+    // --------------------------------------------------------
+    // PLAIN TEXT VERSION
+    // --------------------------------------------------------
 
-        html:
-          createWelcomeEmail(
-            displayName
-          ),
+    const plainText =
+`Welcome to NISHA — your account is ready.
 
-        text:
-`Welcome to NISHA, ${displayName}!
+Hello ${safeDisplayName},
 
-Your NISHA account has been successfully accessed.
+We're delighted to welcome you to NISHA.
+
+Your NISHA account is now ready to use.
 
 Discover a carefully curated shopping experience where quality,
 timeless style and elegance come together.
 
+You're receiving this email because an account was created or accessed
+using this email address.
+
 Explore NISHA:
-${process.env.NISHA_WEBSITE_URL || ""}
+${website}
 
 THE HOUSE OF NISHA
 
@@ -1684,7 +1666,57 @@ Founder • NISHA
 
 Thank you for choosing NISHA.
 
-© ${new Date().getFullYear()} NISHA. All rights reserved.`
+© ${new Date().getFullYear()} NISHA. All rights reserved.`;
+
+    // --------------------------------------------------------
+    // SEND EMAIL
+    // --------------------------------------------------------
+
+    const info =
+      await transporter.sendMail({
+
+        // Use the same real mailbox that authenticates with Gmail SMTP.
+        from:
+          `"NISHA" <${process.env.SMTP_EMAIL}>`,
+
+        // Recipient is taken directly from Firebase Auth.
+        to: {
+          name: safeDisplayName,
+          address: userEmail
+        },
+
+        // Replies go back to the authenticated mailbox.
+        replyTo:
+          process.env.SMTP_EMAIL,
+
+        // Keep SMTP envelope sender aligned with visible sender.
+        envelope: {
+          from: process.env.SMTP_EMAIL,
+          to: userEmail
+        },
+
+        // Neutral transactional subject.
+        subject:
+          `Welcome to NISHA — your account is ready`,
+
+        // HTML version.
+        html:
+          createWelcomeEmail(
+            safeDisplayName
+          ),
+
+        // Plain-text fallback.
+        text:
+          plainText,
+
+        // Actual sending date.
+        date:
+          new Date(),
+
+        // Identifies this as automatically generated mail.
+        headers: {
+          "Auto-Submitted": "auto-generated"
+        }
       });
 
     // --------------------------------------------------------
@@ -1705,7 +1737,7 @@ Thank you for choosing NISHA.
       success: true,
 
       message:
-        "NISHA professional welcome email sent successfully",
+        "NISHA welcome email sent successfully",
 
       messageId:
         info.messageId
