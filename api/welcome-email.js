@@ -44,7 +44,7 @@ const auth = admin.auth();
 
 // Your real NISHA logo
 const NISHA_LOGO_URL =
-  "https://lh3.googleusercontent.com/a-/ALV-UjW1B490eBuN0e6m_7vsDCIEZ_YyBboAyltKRUTc8RbsE3acXiQ=s80-p";
+  "https://kommodo.ai/i/Ny5gJf4ZG6omvvPPCrJ6";
 
 // Your founder photo
 const FOUNDER_PHOTO_URL =
